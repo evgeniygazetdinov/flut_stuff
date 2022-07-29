@@ -22,6 +22,27 @@ class _HomeState extends State<Home>{
       todoList.removeAt(index);
     });
   }
+  void _openMenu(){
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (BuildContext context){
+        return Scaffold(
+          appBar: AppBar(title: Text('menu')),
+          body:
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                        ElevatedButton(onPressed: (){
+                          Navigator.pop(context);
+                          Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+                        }, child: Text('на главную')),
+                        Text('мое меню'),
+                  ],
+              )
+        );
+      })
+    );
+  }
 
   @override
   Widget build(BuildContext context){
@@ -30,7 +51,19 @@ class _HomeState extends State<Home>{
       appBar: AppBar(
         title: Text('список дел'),
         centerTitle: true,
-          backgroundColor: barColor
+          backgroundColor: barColor,
+          actions: [
+            CircleAvatar(
+                radius: 30,
+                backgroundColor: Colors.greenAccent, //<-- SEE HERE
+                child:
+                IconButton(
+                    onPressed: (){
+                        _openMenu();
+                    },
+                    icon: Icon(Icons.menu,
+                  color: Colors.black))),
+        ],
       ),
     body: ListView.builder(itemBuilder: (BuildContext context, int index){
       return Dismissible(key: Key(todoList[index]),
