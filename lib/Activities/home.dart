@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 class Home extends StatefulWidget {
   const Home({Key, key}) : super(key: key);
@@ -13,8 +15,15 @@ class _HomeState extends State<Home>{
   Color addButtonColor = Colors.white;
   MaterialColor backgroundColorForLowButton = Colors.red;
   String _userToDo = '';
+
+  void initFirebase() async{
+    WidgetsFlutterBinding.ensureInitialized();
+    await Firebase.initializeApp();
+  }
+  @override
   void initState(){
     super.initState();
+    initFirebase();
     todoList.addAll(['купить картошку', 'cходить в озон']);
   }
   void removeItems(index){
